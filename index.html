@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script
+      src="https://kit.fontawesome.com/794a4e4e58.js"
+      crossorigin="anonymous"
+    ></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    <title>Todo-list</title>
+  </head>
+  <body class="bg-[#F5F5F5]">
+    <div class="flex flex-col gap-10 justify-center items-center mx-auto mt-10">
+      <h1 class="font-bold text-[24px] p-4">Todo list</h1>
+      <section class="flex flex-col gap-4 w-[80%] lg:w-[40%]">
+        <form action="">
+          <div class="flex flex-col gap-2 lg:flex-row">
+            <input
+              type="text"
+              id="todoInput"
+              placeholder="What are you doing today?"
+              class="border border-2 p-1 w-full border-black rounded-lg outline-none focus:border-red-400"
+            />
+            <button
+              onclick="addTodo(event)"
+              class="bg-[#1e3d59] w-[50%] lg:w-[20%] p-1 py-2 font-bold text-[#FFF] rounded-lg hover:bg-red-400 duration-500"
+              id="add_Btn"
+            >
+              Add
+            </button>
+            <button
+              onclick="updatedTodo(event)"
+              class="hidden bg-[#1e847f] w-[50%] lg:w-[20%] p-1 py-2 font-bold text-[#FFF] rounded-lg hover:bg-[#316879] duration-500"
+              id="update_Btn"
+            >
+              Update
+            </button>
+          </div>
+        </form>
+        <span class="hidden" id="message"></span>
+        <section id="todoList" class="flex flex-col gap-5 pb-10"></section>
+      </section>
+    </div>
+    <script src="/script.js"></script>
+  </body>
+</html>
