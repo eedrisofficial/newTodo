@@ -13,37 +13,42 @@
     <title>Todo-list</title>
   </head>
   <body class="bg-[#F5F5F5]">
-    <div class="flex flex-col gap-10 justify-center items-center mx-auto mt-10">
-      <h1 class="font-bold text-[24px] p-4">Todo list</h1>
-      <section class="flex flex-col gap-4 w-[80%] lg:w-[40%]">
-        <form action="">
-          <div class="flex flex-col gap-2 lg:flex-row">
-            <input
-              type="text"
-              id="todoInput"
-              placeholder="What are you doing today?"
-              class="border border-2 p-1 w-full border-black rounded-lg outline-none focus:border-red-400"
-            />
-            <button
-              onclick="addTodo(event)"
-              class="bg-[#1e3d59] w-[50%] lg:w-[20%] p-1 py-2 font-bold text-[#FFF] rounded-lg hover:bg-red-400 duration-500"
-              id="add_Btn"
-            >
-              Add
-            </button>
-            <button
-              onclick="updatedTodo(event)"
-              class="hidden bg-[#1e847f] w-[50%] lg:w-[20%] p-1 py-2 font-bold text-[#FFF] rounded-lg hover:bg-[#316879] duration-500"
-              id="update_Btn"
-            >
-              Update
-            </button>
-          </div>
-        </form>
-        <span class="hidden" id="message"></span>
-        <section id="todoList" class="flex flex-col gap-5 pb-10"></section>
-      </section>
-    </div>
+    <header class="px-5 py-4 mx-auto max-w-lg">
+      <h1
+        class="text-4xl text-[#1e3d59] font-mono border-b border-red-400 border-b-2 inline-flex gap-3"
+      >
+        <span class="text-red-400 font-bold">Reed </span> Todoist
+      </h1>
+    </header>
+    <section class="px-5 mx-auto max-w-lg">
+      <form action="">
+        <div class="flex flex-col gap-2 lg:flex-row">
+          <input
+            type="text"
+            id="todoInput"
+            placeholder="What are you doing today?"
+            class="border border-2 p-1 w-full border-black rounded-lg outline-none focus:border-red-400"
+          />
+          <button
+            onclick="addTodo(event)"
+            class="bg-[#1e3d59] w-[50%] lg:w-[20%] p-1 py-2 font-bold text-[#FFF] rounded-lg hover:bg-red-400 duration-500"
+            id="add_Btn"
+          >
+            Add
+          </button>
+          <button
+            onclick="updatedTodo(event)"
+            class="hidden bg-[#1e847f] w-[50%] lg:w-[20%] p-1 py-2 font-bold text-[#FFF] rounded-lg hover:bg-[#316879] duration-500"
+            id="update_Btn"
+          >
+            Update
+          </button>
+        </div>
+      </form>
+      <span class="hidden" id="message"></span>
+      <section id="todoList" class="flex flex-col gap-3 pb-10 mt-5"></section>
+    </section>
+
     <script src="/script.js"></script>
   </body>
 </html>

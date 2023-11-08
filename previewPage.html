@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script
+      src="https://kit.fontawesome.com/794a4e4e58.js"
+      crossorigin="anonymous"
+    ></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <title>Preview todo</title>
+  </head>
+  <body>
+    <header class="px-5 py-4 mx-auto max-w-lg">
+      <h1
+        class="text-4xl text-[#1e3d59] font-mono border-b border-red-400 border-b-2 inline-flex gap-3"
+      >
+        <span class="text-red-400 font-bold">Reed </span> Todoist
+      </h1>
+    </header>
+
+    <main class="px-5 py-4 mx-auto max-w-lg">
+      <section id="todoPreviewContainer" class="flex flex-col gap-4"></section>
+
+      <a href="./index.html">
+        <section
+          class="text-[12px] mt-10 duration-500 border rounded-full inline-flex px-2 flex items-center gap-2 hover:text-red-400 hover:border-red-400"
+        >
+          <i class="fa-solid fa-arrow-left"></i>
+          <span class="text-[12px]">view all todo</span>
+        </section>
+      </a>
+    </main>
+    <script src="./script.js"></script>
+    <script src="./previewPage.js"></script>
+  </body>
+</html>

@@ -32,8 +32,8 @@ function resetInput() {
 }
 
 //TODO CHECK INPUT VALUE IF EMPTY
-const checkInputValue = () => {
-  inputMessage.innerHTML = "Please write something.";
+const checkInputValue = (title) => {
+  inputMessage.innerHTML = title;
   inputMessage.classList.remove("hidden");
   inputMessage.classList.add("text-red-700", "text-lg", "font-bold");
 };
@@ -41,13 +41,37 @@ const checkInputValue = () => {
 // TODO STORAGE
 const dataBase = "todoData";
 
+// TODO localStorage
+const getDB = (dataBase) => {
+  if (!dataBase) {
+    throw new Error("Database name is missing ");
+  }
+  return JSON.parse(localStorage.getItem(dataBase)) || [];
+};
+
+const setDB = (dataBase, newData) => {
+  if (!dataBase) {
+    throw new Error("Database name does not exist ");
+  }
+  if (!newData) {
+    throw new Error("data does not exist ");
+  }
+  return localStorage.setItem(dataBase, JSON.stringify(newData)) || [];
+};
+
+// TODO preview page
+const handlePreviewPage = (id) => {
+  setDB("currentTodoID", id);
+  window.location.href = "/previewPage.html";
+};
+
 // TODO, END OF UTILITIES FUNC.....
 
 //TODO CREATION
 const addTodo = (event) => {
   event.preventDefault();
   if (!todoInput.value) {
-    checkInputValue();
+    checkInputValue("Please write something....");
     setTimeout(() => {
       inputMessage.classList.add("hidden");
     }, 3000);
@@ -58,18 +82,12 @@ const addTodo = (event) => {
   const new_Todo = {
     id: uuid(),
     title: todoInput.value,
-    created_at: new Date().toLocaleDateString("en-us", {
-      weekday: "long",
-      year: "numeric",
-      month: "short",
-      day: "numeric",
-    }),
+    created_at: new Date().toDateString(),
   };
 
-  const todoDB = JSON.parse(localStorage.getItem(dataBase)) || [];
+  const todoDB = getDB(dataBase);
   const new_todo_db = [...todoDB, new_Todo];
-  console.log(new_todo_db);
-  localStorage.setItem(dataBase, JSON.stringify(new_todo_db)) || [];
+  setDB(dataBase, new_todo_db);
   fetchTodo();
   resetInput();
 };
@@ -77,24 +95,24 @@ const addTodo = (event) => {
 // TODO RENDERING/READ
 const fetchTodo = () => {
   const todoContainer = document.getElementById("todoList");
-  const todoDB = JSON.parse(localStorage.getItem(dataBase)) || [];
+  const todoDB = getDB(dataBase);
 
   const noTodoInDB = todoDB.length === 0;
   if (noTodoInDB) {
     // todo: Checking in database is empty
     todoContainer.innerHTML = `<h1 class="text-center text-red-500">Please add todo......</h1>`;
-    //   "return" will also do the work of else statement
-  } else {
-    const renderTodo = todoDB
-      .sort((a, b) =>
-        a.created_at < b.created_at ? 1 : a.created_at > b.created_at ? -1 : 0
-      )
-      .map((todo) => {
-        return `
+    return;
+  }
+  const renderTodo = todoDB
+    .sort((a, b) =>
+      a.created_at < b.created_at ? 1 : a.created_at > b.created_at ? -1 : 0
+    )
+    .map((todo) => {
+      return `
     <div
             class="bg-[#FFF] group flex justify-between py-3 px-3 rounded-lg hover:bg-gray-300"
           >
-            <h1>${todo.title}</h1>
+            <button onClick = "handlePreviewPage('${todo.id}')">${todo.title}</button>
             <p>${todo.created_at}</p>
             <section class="gap-4 hidden group-hover:flex">
               <button onClick="editingTodo('${todo.id}')" class="text-[#1e847f]"><i class="fa-solid fa-pen-to-square"></i></button>
@@ -102,9 +120,8 @@ const fetchTodo = () => {
             </section>
           </div>
       `;
-      });
-    todoContainer.innerHTML = renderTodo.join("");
-  }
+    });
+  todoContainer.innerHTML = renderTodo.join("");
 };
 fetchTodo();
 
@@ -120,9 +137,9 @@ const deleteTodo = (id) => {
     confirmButtonText: "Yes, delete it!",
   }).then((result) => {
     if (result.isConfirmed) {
-      const todoDB = JSON.parse(localStorage.getItem(dataBase)) || [];
+      const todoDB = getDB(dataBase);
       const new_Todo_database = todoDB.filter((todo) => todo.id !== id);
-      localStorage.setItem(dataBase, JSON.stringify(new_Todo_database));
+      setDB(dataBase, new_Todo_database);
       fetchTodo();
       Swal.fire("Deleted!", "Your todo has been deleted.", "success");
     }
@@ -131,7 +148,7 @@ const deleteTodo = (id) => {
 
 // TODO EDITING & UPDATING
 const editingTodo = (id) => {
-  const todoDB = JSON.parse(localStorage.getItem(dataBase)) || [];
+  const todoDB = getDB(dataBase);
   const todoToEdit = todoDB.find((todo) => todo.id === id);
   todoInput.value = todoToEdit.title;
   toggle_to_update_Btn();
@@ -150,7 +167,7 @@ const updatedTodo = (event) => {
     return;
   }
   const todoToUpdate = update_Btn.getAttribute("todoToUpdate");
-  const todoDB = JSON.parse(localStorage.getItem(dataBase)) || [];
+  const todoDB = getDB(dataBase);
   const updated_database = todoDB.map((todo) => {
     if (todo.id === todoToUpdate) {
       return { ...todo, title: todoInput.value };
@@ -158,7 +175,7 @@ const updatedTodo = (event) => {
       return todo;
     }
   });
-  localStorage.setItem(dataBase, JSON.stringify(updated_database));
+  setDB(dataBase, updated_database);
   fetchTodo();
   toggle_to_add_Btn();
   resetInput();
