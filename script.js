@@ -83,6 +83,7 @@ const addTodo = (event) => {
     id: uuid(),
     title: todoInput.value,
     created_at: new Date().toDateString(),
+    exactTime: new Date().toLocaleTimeString(),
   };
 
   const todoDB = getDB(dataBase);
