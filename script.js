@@ -74,7 +74,7 @@ const addTodo = (event) => {
     checkInputValue("Please write something....");
     setTimeout(() => {
       inputMessage.classList.add("hidden");
-    }, 3000);
+    }, 5000);
 
     return;
   }
@@ -101,7 +101,7 @@ const fetchTodo = () => {
   const noTodoInDB = todoDB.length === 0;
   if (noTodoInDB) {
     // todo: Checking in database is empty
-    todoContainer.innerHTML = `<h1 class="text-center text-red-500">Please add todo......</h1>`;
+    todoContainer.innerHTML = `<h1 class="text-gray-500">Please add task......</h1>`;
     return;
   }
   const renderTodo = todoDB
@@ -113,7 +113,7 @@ const fetchTodo = () => {
     <div
             class="bg-[#FFF] group flex justify-between py-3 px-3 rounded-lg hover:bg-gray-300"
           >
-            <button onClick = "handlePreviewPage('${todo.id}')">${todo.title}</button>
+            <button onClick = "handlePreviewPage('${todo.id}')" class="truncate" >${todo.title}</button>
             <p>${todo.created_at}</p>
             <section class="gap-4 hidden group-hover:flex">
               <button onClick="editingTodo('${todo.id}')" class="text-[#1e847f]"><i class="fa-solid fa-pen-to-square"></i></button>
